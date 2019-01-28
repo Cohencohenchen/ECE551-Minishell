@@ -1,0 +1,752 @@
+//******************************************************************************
+//
+//The followings are the test cases for myShell, including the input
+//
+//and the supposed ouput.
+//
+//******************************************************************************
+
+First, type make and then ./myShell to get started. And you will see: 
+
+myShell:/home/zc109/ece551/mp_miniproject $
+
+which is correct because the pwd is /home/zc109/ece551/mp_miniproject, and the shell
+is waiting for commands.
+
+In the followings we will test different kinds of input.
+
+//=============================================================================
+Case 1.
+//=============================================================================
+input:
+\n or a sequence of blank spaces followed by \n
+
+output:
+myShell:/home/zc109/ece551/mp_miniproject $
+
+This is correct because the shell didn' get any actual command.
+
+
+//=============================================================================
+Case 2.
+//=============================================================================
+input:
+/bin/ls
+
+output:
+Command.cpp  commandShell.txt  myShell      myShell.h        MyVar.cpp  numerics.txt  StringMath.cpp  testArgu      testError
+Command.h    Makefile          myShell.cpp  myShellTest.txt  MyVar.h    README        StringMath.h    testArgu.cpp  testError.cpp
+Programd exited with status 0
+myShell:/home/zc109/ece551/mp_miniproject $
+
+This is correct because the shell the shell outputs all the files in pwd. And after ls command successfully exits, 
+the shell prints a message 'Programd exited with status 0'.
+After the commands exits, the shell repeats the process, waiting for new input.
+
+
+//=============================================================================
+Case 3.
+//=============================================================================
+input:
+ls
+
+output:
+the same as case 2.
+
+This is correct because the shell will search the command ls in the environment path, and finds it in /bin
+
+
+//=============================================================================
+Case 4.
+//=============================================================================
+input:
+ll
+
+output:
+Command ll not found
+
+This is correct because the shell didn't find command called ll in the environment path.
+
+
+//=============================================================================
+Case 5.
+//=============================================================================
+input:
+/bin/ll
+
+output:
+Command /bin/ll not found
+
+This is correct because the shell will search the command ll in /bin.
+
+
+//=============================================================================
+Case 6.
+//=============================================================================
+input:
+./README
+
+output:
+Command ./README not executable
+
+This is correct because the shell the README file is not excutable, although it can be found in pwd.
+
+
+//=============================================================================
+Case 7.
+//=============================================================================
+input:
+./testArgu a b\    \ \ d        \\\\f
+
+output:
+Argument 1 is "a"
+Argument 2 is "b "
+Argument 3 is "  d"
+Argument 4 is "\\f"
+Programd exited with status 0
+
+This is correct because testArgu is a program that prints all the input arguments it gets. In this case, myShell gives
+it four arguments shown as above. The 'b' is followed by a ' ' because of '\'. For the four '\' before 'f', the first and
+the third makes the second and the fourth norman characters.
+
+
+//=============================================================================
+Case 8.
+//=============================================================================
+input:
+cd ..
+
+output:
+myShell:/home/zc109/ece551 $
+
+This is correct because the shell changes its pwd, which can be seen from the prompt.
+
+
+//=============================================================================
+Case 9.
+//=============================================================================
+input:
+echo $PWD
+
+output:
+/home/zc109/ece551
+Programd exited with status 0
+
+This is correct because the environment PWD variable stores the pwd.
+
+
+//=============================================================================
+Case 10.
+//=============================================================================
+input:
+set A- abc
+
+output:
+Invalid variable name
+
+This is correct because the A- is an invalid variable name because of '-'.
+
+
+//=============================================================================
+Case 11.
+//=============================================================================
+input:
+set A echo
+$A $A
+
+output:
+echo
+Programd exited with status 0
+
+This is correct because A is set to be 'echo', and when we use '$' before 'A', it will be 
+translated to 'echo', we are actually saying: echo echo, and myShell prints echo.
+
+
+//=============================================================================
+Case 12.
+//=============================================================================
+input:
+set BestAnimation Steins Gate
+echo $BestAnimation
+
+output:
+Steins Gate
+Programd exited with status 0
+
+This is correct because the set command will assign the rest of the line to variable.
+
+
+//=============================================================================
+Case 13.
+//=============================================================================
+input:
+echo $PATH
+
+output:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+Programd exited with status 0
+
+This is correct because myShell prints the value of PATH, we can verify it in case 14.
+
+
+//=============================================================================
+Case 14.
+//=============================================================================
+input:
+env
+
+output:
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SSH_CONNECTION=10.197.111.185 6871 152.3.77.223 22
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LANG=en_US.UTF-8
+EDITOR=emacs -nw
+S_COLORS=auto
+XDG_SESSION_ID=82857
+USER=zc109
+PWD=/home/zc109/ece551/mp_miniproject
+HOME=/home/zc109
+SSH_CLIENT=10.197.111.185 6871 22
+SSH_TTY=/dev/pts/1
+MAIL=/var/mail/zc109
+VISUAL=emacs -nw
+TERM=xterm
+SHELL=/bin/bash
+SHLVL=1
+LOGNAME=zc109
+XDG_RUNTIME_DIR=/run/user/1242
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+LESSOPEN=| /usr/bin/lesspipe %s
+OLDPWD=/home/zc109/ece551
+_=./myShell
+Programd exited with status 0
+
+This is correct because the env is an in-built command and we can see that PATH is the same as case 13.
+
+
+//=============================================================================
+Case 15.
+//=============================================================================
+input:
+set TEMP $PATH
+set PATH /usr/bin
+echo $PATH
+env
+
+output:
+/usr/bin
+Programd exited with status 0
+
+LESSOPEN=| /usr/bin/lesspipe %s
+MAIL=/var/mail/zc109
+USER=zc109
+SSH_CLIENT=10.197.111.185 6871 22
+SHLVL=1
+LD_LIBRARY_PATH=/usr/lib/debug
+HOME=/home/zc109
+OLDPWD=/home/zc109/ece551
+SSH_TTY=/dev/pts/1
+VISUAL=emacs -nw
+LOGNAME=zc109
+_=/usr/bin/valgrind
+XDG_SESSION_ID=82857
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+S_COLORS=auto
+XDG_RUNTIME_DIR=/run/user/1242
+GLIBCPP_FORCE_NEW=1
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SHELL=/bin/bash
+LESSCLOSE=/usr/bin/lesspipe %s %s
+PWD=/home/zc109/ece551/mp_miniproject
+SSH_CONNECTION=10.197.111.185 6871 152.3.77.223 22
+EDITOR=emacs -nw
+GLIBCXX_FORCE_NEW=1
+LD_PRELOAD=
+Programd exited with status 0
+
+This is correct because although we changed the local variable 'PATH', it hasn't been exported to environment. env still gives the original path.
+Case 16 is a follow-up of case 15.
+
+
+//=============================================================================
+Case 16.
+//=============================================================================
+input:
+export PATH
+env
+ls
+
+output:
+LESSOPEN=| /usr/bin/lesspipe %s
+MAIL=/var/mail/zc109
+USER=zc109
+SSH_CLIENT=10.197.111.185 6871 22
+SHLVL=1
+LD_LIBRARY_PATH=/usr/lib/debug
+HOME=/home/zc109
+OLDPWD=/home/zc109/ece551
+SSH_TTY=/dev/pts/1
+VISUAL=emacs -nw
+LOGNAME=zc109
+_=/usr/bin/valgrind
+XDG_SESSION_ID=82857
+TERM=xterm
+PATH=/usr/bin
+S_COLORS=auto
+XDG_RUNTIME_DIR=/run/user/1242
+GLIBCPP_FORCE_NEW=1
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SHELL=/bin/bash
+LESSCLOSE=/usr/bin/lesspipe %s %s
+PWD=/home/zc109/ece551/mp_miniproject
+SSH_CONNECTION=10.197.111.185 6871 152.3.77.223 22
+EDITOR=emacs -nw
+GLIBCXX_FORCE_NEW=1
+LD_PRELOAD=
+Programd exited with status 0
+
+Command ls not found
+Programd exited with status 1
+
+
+This is correct because after export PATH, the value of PATH has been changed, as we see in env. Also, 'ls' command cannot be found because it is in /bin.
+After this, please do the followings to restore the path: 
+set PATH $TEMP
+export PATH
+
+
+//=============================================================================
+Case 17.
+//=============================================================================
+input:
+inc NUM
+echo $NUM
+
+output:
+1
+Programd exited with status 0
+
+This is correct because NUM doesn't exist, after we increase it, it becomes '1'.
+
+
+//=============================================================================
+Case 18.
+//=============================================================================
+input:
+set NUM1 114514
+set NUM2 -114514
+set NUM3 114.514
+set NUM4 -0.233
+inc NUM1
+inc NUM2
+inc NUM3
+inc NUM4
+echo $NUM1 $NUM2 $NUM3 $NUM4
+
+output:
+114515 -114513 115.514 0.767
+Programd exited with status 0
+
+This is correct because each has increased by one.
+
+
+//=============================================================================
+Case 19.
+//=============================================================================
+input:
+set String \\   Pokemon        Go   \\
+echo $String
+inc String
+echo $String
+
+output:
+\   Pokemon        Go   \
+Programd exited with status 0
+
+1
+Programd exited with status 0
+
+This is correct because String is a string and inc increases it to one.
+
+
+//=============================================================================
+Case 20.
+//=============================================================================
+input:
+set DIR ..
+cd $DIR
+
+output:
+myShell:/home/zc109/ece551 $
+
+This is correct because DIR repesents .. , and cd .. changes current directory to the parent directory.
+
+
+//=============================================================================
+Case 21.
+//=============================================================================
+input:
+cd
+
+output:
+Wrong input format for cd command
+
+This is correct because in myShell, cd must be followed by exactly one dirname.
+
+
+//=============================================================================
+Case 22.
+//=============================================================================
+input:
+cd /bin   /usr
+
+output:
+Wrong input format for cd command
+
+This is correct because in myShell, cd must be followed by exactly one dirname.
+
+
+//=============================================================================
+Case 23.
+//=============================================================================
+input:
+cd $PATH
+
+output:
+directory not exist
+
+This is correct because there is no such dir.
+
+
+//=============================================================================
+Case 24.
+//=============================================================================
+input:
+cd README
+
+output:
+not a directory
+
+This is correct because although README can be found, it's not a directory.
+
+
+//=============================================================================
+Case 25.
+//=============================================================================
+input:
+cd $DK
+
+output:
+Wrong input format for cd command
+
+This is correct because there is no variable named 'DK', unless you have set it. So 
+$DK returns an empty string, and the command is actually cd followed by nothing.
+
+
+//=============================================================================
+Case 26.
+//=============================================================================
+input:
+export
+
+output:
+Wrong input format for export command
+
+This is correct because export takes one input as argument.
+
+
+//=============================================================================
+Case 27.
+//=============================================================================
+input:
+export Bilibili
+
+output:
+No such variable
+
+This is correct because there is no such variable named Bilibili.
+
+
+//=============================================================================
+Case 28.
+//=============================================================================
+input:
+set Blibili 114514
+set Niconico Bilibili
+export $Niconico
+env
+
+output:
+...the above is ommited...
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+LESSOPEN=| /usr/bin/lesspipe %s
+OLDPWD=/home/zc109/ece551
+_=./myShell
+Bilibili=114514
+Programd exited with status 0
+
+This is correct because the value of Niconico is Bilibili, we export Bilibili to environment variable.
+
+
+//=============================================================================
+Case 29.
+//=============================================================================
+input:
+.
+..
+
+output:
+Command . not executable
+Command .. not executable
+
+This is correct because . exists(in usr/local/sbin), but is not executable.
+
+
+//=============================================================================
+Case 30.
+//=============================================================================
+input:
+/
+//
+///
+./
+/./.
+
+output:
+/ is a directory
+// is a directory
+/// is a directory
+./ is a directory
+/./. is a directory
+
+This is correct because / , // , /// , ./ and /./. are directory.
+
+
+//=============================================================================
+Case 31.
+//=============================================================================
+input:
+/bin
+
+output:
+/bin is a directory
+
+This is correct because /bin is a directory.
+
+
+//=============================================================================
+Case 32.
+//=============================================================================
+input:
+./testError 2> ErrMsg.txt
+
+output:
+Programd exited with status 1
+
+This is correct because we use stderror redirection to ErrMsg.txt. testError is program that will
+only perror. We can use cat to see ErrMsg.txt, and it says This is a program that will exit(EXIT_FAILURE).: Success
+. This is what we want.
+
+
+//=============================================================================
+Case 33.
+//=============================================================================
+input:
+./Repeat 3 < Input.txt > Output.txt
+cat Output.txt
+
+output:
+12345
+12345
+12345
+abcde
+abcde
+abcde
+
+This is correct because Repeat is a program that takes number n as argument, and then reads strings from stdin, prints it n times.
+Input.txt is:
+12345
+abcde.
+Now Repeat reads strings from Input.txt and prints it to Output.txt.
+
+//=============================================================================
+Case 34.
+//=============================================================================
+input:
+./Repeat -1 < Input.txt > Output.txt 2> ErrMsg.txt
+cat ErrMsg.txt
+
+output:
+Programd exited with status 1
+N must be positive: Success
+
+This is correct because we redirect error message to ErrMsg.txt.
+
+
+//=============================================================================
+Case 35.
+//=============================================================================
+input:
+./Repeat 3 < Input2.txt
+
+output:
+Open Failed: No such file or directory
+Programd exited with status 1
+
+This is correct because Input2.txt doesn't exist.
+
+
+//=============================================================================
+Case 36.
+//=============================================================================
+input:
+echo > Output.txt 123
+cat Output.txt
+
+output:
+123
+
+This is correct because we redirect the output of echo to Output.txt.
+
+
+//=============================================================================
+Case 37.
+//=============================================================================
+input:
+echo > Output.txt 123
+cat Output.txt
+
+output:
+123
+
+This is correct because we redirect the output of echo to Output.txt.
+
+
+//=============================================================================
+Case 38.
+//=============================================================================
+input:
+wc -l < Input.txt
+
+output:
+2
+
+This is correct because we redirect the input to Input.txt and there are two words in Input.txt.
+
+
+//=============================================================================
+Case 39.
+//=============================================================================
+input:
+echo >
+
+output:
+2
+
+This is correct because we redirect the input to Input.txt and there are two words in Input.txt.
+
+
+//=============================================================================
+Case 40.
+//=============================================================================
+input:
+echo 123 > A.txt > B.txt
+
+output:
+rediretion format error
+: Success
+
+This is correct because we only allow at most one file for each redirection.
+
+
+//=============================================================================
+Case 41.
+//=============================================================================
+input:
+echo >
+
+output:
+rediretion format error
+: Success
+
+This is correct because we the > tells shell there will be a file following but it didn't get.
+
+
+//=============================================================================
+Case 42.
+//=============================================================================
+input:
+echo > >
+
+output:
+Programd exited with status 0
+
+This is correct. The first > is redirection symbol and the second one is interpreted as a filename. use ls, we can see a file named >.
+
+
+//=============================================================================
+Case 43.
+//=============================================================================
+input:
+exit
+
+output:
+Shell exited
+
+This is correct.
+
+
+//=============================================================================
+Case 44.
+//=============================================================================
+input:
+ctrl + d
+
+output:
+Shell exited
+
+This is correct.
+
+
+//=============================================================================
+Case 45.
+//=============================================================================
+input:
+>
+<
+2>
+
+output:
+nothing happens.
+
+This is correct because we didn't give the shell any command to exxcute or any redirection file.
+
+
+//=============================================================================
+Case 46.
+//=============================================================================
+input:
+cd ..
+exit
+
+output:
+myShell:/home/zc109/ece551 $
+zc109@ece551:~/ece551/mp_miniproject$
+
+This is correct because after shell exits we expect to return to the original directory.
+
+
+//=============================================================================
+Case 47.
+//=============================================================================
+input:
+set A 123
+echo $A$B
+
+output:
+123
+
+This is correct because shell finds A in map but can't find B, so it replaces A but ignores B.

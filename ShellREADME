@@ -1,0 +1,13 @@
+I have finished the firset three parts and the first half of the fourth step.
+
+To run myShell, make and ./myShell.
+
+I write three classes, myShell, MyVar and Command, the last two serve as member of the first one.
+
+MyVar class stores variables and path, as well as mathod to modify them.
+
+Command class stores command from input, as well as how to inteprete them.
+
+I've written testcases for you in TestCases.txt.
+
+There are some test programs as well, use them as the TestCases.txt says and the instruction inside them.
