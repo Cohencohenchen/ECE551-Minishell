@@ -1,5 +1,3 @@
-I have finished the firset three parts and the first half of the fourth step.
-
 To run myShell, make and ./myShell.
 
 I write three classes, myShell, MyVar and Command, the last two serve as member of the first one.
